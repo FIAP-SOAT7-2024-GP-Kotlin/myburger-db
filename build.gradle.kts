@@ -63,9 +63,6 @@ liquibase {
             "password" to props["DATABASE_PASSWORD"],
             "logLevel" to "debug"
         )
-        logger.info("########################################################")
-        logger.info("## activities.register = ${liquibase.activities.names}")
-        logger.info("########################################################")
     }
     runList = "update"
 }
@@ -73,17 +70,6 @@ liquibase {
 tasks.named<LiquibaseTask>("update") {
     dependsOn("processResources")
     doFirst {
-        logger.info("########################################################")
-        logger.info("## doFirst ${liquibase.activities.names}")
-        logger.info("## activities[update] = ${liquibase.activities.getByName("update")}")
-        logger.info("## activities[update].args = ${liquibase.activities.getByName("update").arguments}")
-        logger.info("########################################################")
         liquibase.setProperty("runList", "update")
     }
-
-    logger.info("########################################################")
-    logger.info("## named = ${liquibase.activities.names}")
-    logger.info("## activities[update] = ${liquibase.activities.getByName("update")}")
-    logger.info("## activities[update].args = ${liquibase.activities.getByName("update").arguments}")
-    logger.info("########################################################")
 }
