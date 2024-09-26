@@ -5,7 +5,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="2024-05-22-order-item-add-comment-column" author="luizfernando.calazans8@gmail.com">
-        <addColumn tableName="order_item">
+        <addColumn tableName="order_item" schemaName="myburguer">
             <column name="comment" type="VARCHAR(1000)">
                 <constraints nullable="true"/>
             </column>

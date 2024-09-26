@@ -1,8 +1,8 @@
-import org.liquibase.gradle.LiquibaseTask
 import java.io.IOException
-import java.util.Properties
+import java.util.*
 
 val javaVersion = JavaVersion.VERSION_21
+val srcMainDbPath = "${projectDir.absolutePath}/src/main/db"
 
 group = "io.github.soat7"
 version = "0.0.1-SNAPSHOT"
@@ -25,6 +25,7 @@ try {
 }
 
 plugins {
+    kotlin("jvm") version "2.0.20"
     id("org.liquibase.gradle") version "3.0.1"
 }
 
@@ -39,55 +40,37 @@ repositories {
 }
 
 dependencies {
+    implementation("info.picocli:picocli:4.+")
+    implementation("org.liquibase:liquibase-core:4.+")
+    implementation("org.postgresql:postgresql:42.7.+")
+
     // Liquibase
     liquibaseRuntime("info.picocli:picocli:4.+")
     liquibaseRuntime("org.liquibase:liquibase-core:4.+")
     liquibaseRuntime("org.postgresql:postgresql:42.7.+")
-    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate6:4.+")
-    liquibaseRuntime("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 
 liquibase {
-    activities.register("main") {
+    activities.register("update") {
         this.arguments = mapOf(
-            "changelogFile" to "/db/changelog/master.xml",
-            "url" to "jdbc:${props["DATABASE_URL"]}",
+            "changelogFile" to "/changelog/master.xml",
+            "searchPath" to srcMainDbPath,
+            "url" to props["DATABASE_URL"],
             "username" to props["DATABASE_USER"],
             "password" to props["DATABASE_PASSWORD"],
+            "logLevel" to "debug"
         )
     }
     activities.register("rollback") {
         this.arguments = mapOf(
-            "changelogFile" to "/db/changelog/master.xml",
+            "changelogFile" to "$srcMainDbPath/changelog/master.xml",
             "url" to "jdbc:${props["DATABASE_URL"]}",
             "username" to props["DATABASE_USER"],
             "password" to props["DATABASE_PASSWORD"],
             "count" to 1,
+            "logLevel" to "debug"
         )
     }
+    runList = "update"
 }
 
-
-tasks.named<LiquibaseTask>("update") {
-    doFirst {
-        liquibase.setProperty("runList", "rollback")
-    }
-}
-
-tasks.named<LiquibaseTask>("updateSql") {
-    doFirst {
-        liquibase.setProperty("runList", "rollback")
-    }
-}
-
-tasks.named<LiquibaseTask>("rollbackCount") {
-    doFirst {
-        liquibase.setProperty("runList", "rollback")
-    }
-}
-
-tasks.named<LiquibaseTask>("rollbackCountSql") {
-    doFirst {
-        liquibase.setProperty("runList", "rollback")
-    }
-}
