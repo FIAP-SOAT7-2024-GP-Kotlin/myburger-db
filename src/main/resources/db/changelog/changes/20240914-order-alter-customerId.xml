@@ -5,7 +5,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="20240914-order-alter-customerId" author="jsantosrocha@gmail.com">
-        <dropForeignKeyConstraint constraintName="fk_customer" baseTableName="order" schemaName="myburguer"/>
+        <dropForeignKeyConstraint constraintName="fk_customer" baseTableName="order" baseTableSchemaName="myburguer"/>
         <dropNotNullConstraint tableName="order" columnName="customer_id" columnDataType="UUID" schemaName="myburguer"/>
     </changeSet>
 

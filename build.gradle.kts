@@ -1,9 +1,9 @@
+import org.jetbrains.kotlin.gradle.utils.extendsFrom
 import org.liquibase.gradle.LiquibaseTask
 import java.io.IOException
 import java.util.*
 
 val javaVersion = JavaVersion.VERSION_21
-val srcMainDbPath = file("${projectDir.absolutePath}/src/main/db")
 
 group = "io.github.soat7"
 version = "0.0.1-SNAPSHOT"
@@ -40,11 +40,9 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs + srcMainDbPath
-        }
+configurations {
+    liquibaseRuntime {
+        extendsFrom(configurations.compileClasspath.get())
     }
 }
 
@@ -52,19 +50,14 @@ dependencies {
     implementation("info.picocli:picocli:4.+")
     implementation("org.liquibase:liquibase-core:4.+")
     implementation("org.postgresql:postgresql:42.7.+")
-
-    // Liquibase
-    liquibaseRuntime("info.picocli:picocli:4.+")
-    liquibaseRuntime("org.liquibase:liquibase-core:4.+")
-    liquibaseRuntime("org.postgresql:postgresql:42.7.+")
-    liquibaseRuntime(sourceSets.main.get().resources)
 }
 
 
 liquibase {
     this.activities.register("update") {
         this.arguments = mapOf(
-            "changelogFile" to "/changelog/master.xml",
+            "changelogFile" to "/db/changelog/master.xml",
+            "searchPath" to sourceSets.main.get().resources.srcDirs.first(),
             "url" to props["DATABASE_URL"],
             "username" to props["DATABASE_USER"],
             "password" to props["DATABASE_PASSWORD"],
@@ -78,11 +71,14 @@ liquibase {
 }
 
 tasks.named<LiquibaseTask>("update") {
+    dependsOn("processResources")
     doFirst {
+        logger.info("########################################################")
+        logger.info("## doFirst ${liquibase.activities.names}")
+        logger.info("## activities[update] = ${liquibase.activities.getByName("update")}")
+        logger.info("## activities[update].args = ${liquibase.activities.getByName("update").arguments}")
+        logger.info("########################################################")
         liquibase.setProperty("runList", "update")
-        logger.info("########################################################")
-        logger.info("## doFirst ${liquibase.activities.asMap}")
-        logger.info("########################################################")
     }
 
     logger.info("########################################################")
