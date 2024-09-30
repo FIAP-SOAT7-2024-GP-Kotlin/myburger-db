@@ -9,11 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      TF_VAR_do_token: ${{ secrets.DO_TOKEN_ACCESS }}
-      DATABASE_URL: jdbc:postgresql://myburger-db-server-do-user-17490961-0.d.db.ondigitalocean.com:25060/my_burger
+      DATABASE_URL: jdbc:postgresql://myburger-db-server-do-user-17490961-0.l.db.ondigitalocean.com:25060/my_burger
       DATABASE_USER: doadmin
-      DATABASE_PASSWORD: ${{ secrets.DB_PASS }}
-
 
     steps:
       - name: Checkout code
@@ -23,8 +20,16 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DO_TOKEN_ACCESS }}
+      
+      - name: Get userpassword
+        run: |
+          DB_ID=$(doctl databases list --format ID --no-header)
+          DB_PASS=$(doctl databases user get $DB_ID doadmin --format Password --no-header)
+          echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
 
       - name: run gradle
+        env:
+          DATABASE_PASSWORD: ${{ env.DB_PASS }}
         run: |
           apt-get update
           apt-get install openjdk-21-jdk
