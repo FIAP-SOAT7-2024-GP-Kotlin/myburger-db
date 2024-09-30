@@ -1,0 +1,32 @@
+name: Deploy db
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN_ACCESS }}
+      DATABASE_URL: jdbc:postgresql://myburger-db-server-do-user-17490961-0.d.db.ondigitalocean.com:25060/my_burger
+      DATABASE_USER: doadmin
+      DATABASE_PASSWORD: ${{ secrets.DB_PASS }}
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up DigitalOcean
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN_ACCESS }}
+
+      - name: run gradle
+        run: |
+          apt-get update
+          apt-get install openjdk-21-jdk
+          apt-get install gradle
+          ./gradlew --no-daemon update
