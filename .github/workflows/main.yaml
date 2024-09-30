@@ -32,6 +32,6 @@ jobs:
           DATABASE_PASSWORD: ${{ env.DB_PASS }}
         run: |
           apt-get update
-          apt-get install openjdk-21-jdk
-          apt-get install gradle
+          apt-get upgrade
+          apt-get install openjdk-21-jdk gradle
           ./gradlew --no-daemon update
