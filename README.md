@@ -42,7 +42,11 @@ Dentro do diretório `src/main/resources`, existem os seguintes arquivos relevan
 ## Banco de Dados
 
 Neste projeto, estamos utilizando um banco de dados PostgreSQL. Este banco de dados é famoso e amplamente utilizado. 
-Robustes e confiabilidade são características importantes para bancos de dados do PostgreSQL. Ele oferece suporte a 
-transações ACID, escalabilidade horizontal e integração com outros sistemas. Também é um banco de dados padrão em qualquer
-cloud provider que ofereça serviços de hospedagem de aplicações.
+Robustes e confiabilidade são características importantes para bancos de dados do PostgreSQL. Ele é um banco de dados 
+padrão em qualquer cloud provider que ofereça serviços de hospedagem de aplicações.
+
+Devido ao escopo do projeto com as seguintes características: 
+- Sistema com usuarios limitados devido a interação por totem e pontos na cozinha
+- Buscas sem necessidade de alto desempenho (podemos usar um cache no API Gateway)
+
 
