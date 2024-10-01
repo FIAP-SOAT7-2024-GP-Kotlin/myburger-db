@@ -1,9 +1,7 @@
 name: Deploy db
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:    
 
 jobs:
   deploy:
