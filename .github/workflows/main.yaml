@@ -33,5 +33,9 @@ jobs:
         run: |
           apt-get update
           apt-get upgrade
-          apt-get install openjdk-21-jdk gradle
+          apt-get install openjdk-21-jdk
+          wget https://services.gradle.org/distributions/gradle-8.9-bin.zip
+          mkdir /opt/gradle
+          unzip gradle-8.9-bin.zip
+          export PATH=$PATH:/opt/gradle/gradle-8.10.2/bin
           ./gradlew --no-daemon update
