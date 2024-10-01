@@ -35,4 +35,5 @@ jobs:
         env:
           DATABASE_PASSWORD: ${{ env.DB_PASS }}
         run: |
+          sed 's/#DB_PASS#/'"$DATABASE_PASSWORD"'/g' -i .env
           ./gradlew --no-daemon update
