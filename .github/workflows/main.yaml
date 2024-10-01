@@ -33,14 +33,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Install Gradle
-        run: |
-          sudo apt update
-          sudo apt install -y gradle
-          
-      - name: Verify Gradle installation
-        run: gradle --version
-        
       - name: run gradle
         env:
           DATABASE_PASSWORD: ${{ env.DB_PASS }}
