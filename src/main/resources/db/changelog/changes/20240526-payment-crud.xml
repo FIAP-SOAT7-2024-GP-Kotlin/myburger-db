@@ -13,6 +13,15 @@
                 <constraints nullable="false"/>
             </column>
             <column name="authorization_id" type="VARCHAR(255)"/>
+            <column name="order_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_price" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qrcode" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
