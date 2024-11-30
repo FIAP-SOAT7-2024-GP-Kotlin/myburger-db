@@ -6,11 +6,17 @@
 
     <changeSet id="2024-04-30-schema-creation" author="rafaeljpc@gmail.com">
         <sql>
-            CREATE SCHEMA IF NOT EXISTS myburguer
+            CREATE SCHEMA IF NOT EXISTS myburguer_payment;
+        </sql>
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS myburguer_user;
+        </sql>
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS myburguer_management;
         </sql>
     </changeSet>
     <changeSet id="2024-04-30-customer-table-creation" author="luizfernando.calazans8@gmail.com">
-        <createTable tableName="customer" schemaName="myburguer">
+        <createTable tableName="customer" schemaName="myburguer_management">
             <column name="id" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_customer"/>
             </column>
@@ -24,7 +30,7 @@
         </createTable>
 
         <addUniqueConstraint columnNames="cpf" constraintName="uk_customer_cpf" tableName="customer"
-                             schemaName="myburguer"/>
+                             schemaName="myburguer_management"/>
     </changeSet>
 
 </databaseChangeLog>

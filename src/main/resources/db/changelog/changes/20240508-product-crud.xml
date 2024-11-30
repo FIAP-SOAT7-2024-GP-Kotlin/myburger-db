@@ -5,7 +5,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="create-product-table" author="luizfernando.calazans8@gmail.com">
-        <createTable tableName="product" schemaName="myburguer">
+        <createTable tableName="product" schemaName="myburguer_management">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
