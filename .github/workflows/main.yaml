@@ -21,7 +21,7 @@ jobs:
       
       - name: Get userpassword
         run: |
-          DB_ID=$(doctl databases list --format ID --no-header)
+          DB_ID=$(doctl db list | grep pg | awk '{print $1}')
           DB_PASS=$(doctl databases user get $DB_ID doadmin --format Password --no-header)
           echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
 
