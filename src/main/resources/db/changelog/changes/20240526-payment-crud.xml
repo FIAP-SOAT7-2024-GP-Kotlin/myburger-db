@@ -5,7 +5,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="2024-05-26-payment-table-creation" author="luizfernando.calazans8@gmail.com">
-        <createTable tableName="payment" schemaName="myburguer">
+        <createTable tableName="payment" schemaName="myburguer_payment">
             <column name="id" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_payment"/>
             </column>
