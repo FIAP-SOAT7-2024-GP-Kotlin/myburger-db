@@ -2,9 +2,8 @@
 https://www.youtube.com/watch?v=vr1br-s-Adk&ab_channel=VidaExtra
 
 # myburger-management-service
->>>>>>> main
 myburger-db
----
+
 
 ## Introdução
 Este é um projeto gerenciado usando Gradle, que utiliza o Liquibase para gerenciar a migração de bancos de dados. O Liquibase é uma ferramenta de versionamento de banco de dados open-source.
