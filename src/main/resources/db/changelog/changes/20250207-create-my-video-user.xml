@@ -10,7 +10,7 @@
         </sql>
     </changeSet>
     <changeSet id="2025-02-07-user-table-creation" author="luizfernando.calazans8@gmail.com">
-                <createTable tableName="user" schemaName="myburguer_user">
+                <createTable tableName="user" schemaName="myvideo_user">
             <column name="id" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user"/>
             </column>
