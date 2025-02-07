@@ -24,8 +24,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <addUniqueConstraint columnNames="id" constraintName="pk_user" tableName="user" schemaName="myvideo_user"/>
     </changeSet>
 
 </databaseChangeLog>
